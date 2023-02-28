@@ -18,6 +18,7 @@
 
     <modules>
         <module>facturas</module>
+        <module>habitaciones</module>
     </modules>
     <properties>
         <maven.compiler.source>19</maven.compiler.source>

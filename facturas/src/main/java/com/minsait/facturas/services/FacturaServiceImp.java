@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,7 +38,9 @@ public class FacturaServiceImp implements FacturaService {
 
     @Override
     @Transactional(readOnly = false)
-    public Factura guardar(Factura factura) {
+    public Factura guardar(Factura factura)
+    {
+        factura.setFechaEmision(Date.from(Instant.now()));
         return facturaRepository.save(factura);
     }
 

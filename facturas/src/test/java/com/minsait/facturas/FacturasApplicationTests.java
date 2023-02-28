@@ -14,8 +14,5 @@ class FacturasApplicationTests {
 
 
 
-	@Test
-	void contextLoads() {
-	}
 
 }
