@@ -44,7 +44,19 @@ public class FacturaController {
         }
     }
 
-    @DeleteMapping("/")
+    @PutMapping("/{id}")
+    public ResponseEntity<Factura> actualizar(@PathVariable Long id,@RequestBody Factura factura){
+        try{
+            Factura facturaActualizada= facturaService.buscarPorId(id).orElseThrow();
+            facturaActualizada.setEstadoPago(factura.getEstadoPago());
+            facturaActualizada.setTotalReserva(factura.getTotalReserva());
+            return new ResponseEntity<>(facturaService.guardar(facturaActualizada), HttpStatus.CREATED);
+        }catch (NoSuchElementException e){
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id) {
         if (facturaService.eliminar(id))
             return ResponseEntity.noContent().build();

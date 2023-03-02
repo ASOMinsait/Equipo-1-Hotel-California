@@ -58,7 +58,7 @@ public class testingControllers {
 
     @Test
     void testFindById() throws Exception {
-        when(service.buscarPorId(1L)).thenReturn(Datos.crearFactura1());
+        when(service.buscarPorId(1L)).thenReturn(Optional.of(Datos.crearFactura1().get()));
 
         mvc.perform(get("/api/v1/facturas/1").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.idFacturas", Matchers.is(1)))
@@ -75,6 +75,8 @@ public class testingControllers {
     @Test
     void testDeleteSiExiste() throws Exception {
         Long id=1L;
+        when(service.buscarPorId(id)).thenReturn(Optional.of(Datos.crearFactura1().get()));
+
         when(service.eliminar(id)).thenReturn(true);
         mvc.perform(delete("/api/v1/facturas/{id}",id)).
                 andExpect(status().isNoContent());
@@ -99,4 +101,27 @@ public class testingControllers {
                         status().isCreated()
                 );
     }
+
+
+    @Test
+    void testActualizar() throws Exception {
+        Factura factura=new Factura(null,3L, Date.from(Instant.now()),new BigDecimal(650),"TARJETA","PAGADO");
+        when(service.buscarPorId(3L)).thenReturn(Optional.of(Datos.crearFactura1().get()));
+        when(service.guardar(any())).then(invocation -> {
+            Factura facturaActualizada=factura;
+            facturaActualizada.setIdFacturas(3L);
+            return facturaActualizada;
+        });
+
+        mvc.perform(put("/api/v1/facturas/3").contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(factura)))
+                .andExpectAll(
+                        jsonPath("$.idFacturas", Matchers.is(3)),
+                        jsonPath("$.idReservacion", Matchers.is(3)),
+                        jsonPath("$.totalReserva", Matchers.is(650)),
+                        status().isCreated()
+                );
+    }
+
+
 }
