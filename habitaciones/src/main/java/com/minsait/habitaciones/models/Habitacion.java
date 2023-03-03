@@ -19,14 +19,16 @@ public class Habitacion implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id_habitacion")
+    private Long idHabitacion;
 
     @Column(name = "maximo_personas")
     private Integer maxPersonas;
 
 
 
-    private BigDecimal precio;
+    @Column(name = "precio_noche")
+    private BigDecimal precioNoche;
 
-    private Integer status;
+    private Integer estatus;
 }

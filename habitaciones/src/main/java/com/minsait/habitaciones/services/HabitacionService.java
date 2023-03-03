@@ -4,23 +4,23 @@ import com.minsait.habitaciones.models.Habitacion;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 public interface HabitacionService {
 
     List<Habitacion> buscarDisponibles();
 
     List<Habitacion> buscarTodas();
-    Habitacion buscarPorId();
+    Optional<Habitacion> buscarPorId(Long id);
 
-    List<Habitacion>  buscarPorMaxPersonas();
+    List<Habitacion>  buscarPorMaxPersonas(Integer max);
 
     void reservarHabitacion(Long id);
 
     Habitacion guardar(Habitacion habitacion);
 
-   void eliminar(Long id);
+   boolean eliminar(Long id);
 
-   List<Habitacion> buscarPorRangoPrecios(BigDecimal precioMin, BigDecimal precioMax);
 
 
 
