@@ -14,7 +14,7 @@ public interface HabitacionRepository extends JpaRepository<Habitacion,Long> {
     @Query("SELECT h FROM Habitacion h WHERE h.estatus=1")
     List<Habitacion> buscarDisponibles();
 
-    @Query("SELECT h FROM Habitacion h WHERE h.maxPersonas <= :max")
+    @Query("SELECT h FROM Habitacion h WHERE h.maxPersonas <= :max and h.estatus=1")
     List<Habitacion> buscarPorMaxPersonas(@Param("max") Integer max);
 
 
