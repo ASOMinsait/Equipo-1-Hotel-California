@@ -34,4 +34,6 @@ public class ReservaServiceImpl implements ReservaService{
         }
         return bool;
     }
+    @Override
+    public Optional<Reserva> buscarHabitacionPorId(Long id){return reservaRepository.findByHabitacion(id);}
 }

@@ -8,6 +8,7 @@ import java.util.Optional;
 public interface ReservaService {
     List<Reserva> mostrarTodos();
     Optional<Reserva> buscarPorId(Long id);
+    Optional<Reserva> buscarHabitacionPorId(Long id);
     Reserva crearReserva(Reserva reserva);
     boolean eliminar(Long id);
 }

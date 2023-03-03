@@ -42,27 +42,27 @@ class ReservaControllerTest {
     void testFindAll() throws Exception {
         when(service.mostrarTodos()).thenReturn(List.of(Datos.crearReserva().get(), Datos.crearReserva2().get()));
         mvc.perform(get( "/api/v1/reservas/").contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath(  "$[0].idHabitacion").value(  11))
-                .andExpect(jsonPath(  "$[1].idHabitacion").value( 10 ));
+                .andExpect(jsonPath(  "$[0].idHabitacion").value(  10))
+                .andExpect(jsonPath(  "$[1].idHabitacion").value( 11));
     }
     @Test
     void testFindById() throws Exception{
-        when(service.buscarPorId( 1L)).thenReturn(Datos.crearReserva());
+        when(service.buscarPorId( anyLong())).thenReturn(Datos.crearReserva());
         mvc.perform(get("/api/v1/reservas/1").contentType (MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType (MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath(  "$.idHabitacion").value(  11))
-                .andExpect(jsonPath(  "$.estadoReservacion").value( "Disponible"));
+                .andExpect(jsonPath("$.idReserva").value(1L))
+                .andExpect(jsonPath(  "$.idHabitacion").value(  10));
     }
     @Test
     void testFindByIdIfDoesntExist() throws Exception {
-        when(service.buscarPorId(1L)).thenThrow(NoSuchElementException.class);
-        mvc.perform(get("/api/v1/reservas/1").contentType(MediaType.APPLICATION_JSON)) .
+        when(service.buscarPorId(anyLong())).thenThrow(NoSuchElementException.class);
+        mvc.perform(get("/api/v1/reservas/3").contentType(MediaType.APPLICATION_JSON)) .
                 andExpect(status().isNotFound());
     }
     @Test
     void testSave() throws Exception {
-        Reserva reserva=new Reserva (null, 9L,  new Date(), new Date(), "Disponible");
+        Reserva reserva=new Reserva (null, 12L, 3 ,new Date(), new Date());
         when(service.crearReserva(any (Reserva.class))).then(invocationOnMock -> {
             Reserva reservaTemporal=invocationOnMock.getArgument ( 0);
             reservaTemporal.setIdReserva(3L);
@@ -74,8 +74,8 @@ class ReservaControllerTest {
                         .content(mapper.writeValueAsString(reserva)))
                 .andExpectAll(
                         jsonPath("$.idReserva", Matchers.is( 3)),
-                        jsonPath("$.idHabitacion" , Matchers.is(9)),
-                        jsonPath("$.estadoReservacion", Matchers.is("Disponible")),
+                        jsonPath("$.idHabitacion" , Matchers.is(12)),
+                        jsonPath("$.diasDeReserva", Matchers.is(3)),
                         status().isCreated()
                 );
     }
@@ -94,9 +94,9 @@ class ReservaControllerTest {
                 .andExpect(status().isNotFound());
     }
     @Test
-    void testActualizar() throws Exception{
-        Reserva reserva=new Reserva (null, 9L,  new Date(), new Date(), "Disponible");
-        when (service.buscarPorId(1L)).thenReturn(Datos.crearReserva());
+    void testUpdate() throws Exception{
+        Reserva reserva=new Reserva (null, 9L, 10 ,new Date(), new Date());
+        when (service.buscarPorId(anyLong())).thenReturn(Datos.crearReserva());
         when(service.crearReserva(any())).then(invocationOnMock -> {
             Reserva reservaActualizada=reserva;
             reservaActualizada.setIdReserva(1L);
@@ -107,11 +107,21 @@ class ReservaControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath(  "$.idReserva").value( 1))
                 .andExpect(jsonPath( "$.idHabitacion", Matchers.is( 9)))
-                .andExpect(jsonPath(  "$.estadoReservacion", Matchers.is( "Disponible")));
+                .andExpect(jsonPath(  "$.diasDeReserva", Matchers.is( 10)));
         verify(service, atMostOnce()).buscarPorId(1L);
         InOrder order =inOrder (service);
         order.verify(service).buscarPorId(1L);
         order.verify(service).crearReserva(any());
+    }
+    @Test
+    void testUpdateIfIdDoesntExist() throws Exception{
+        Reserva reserva=new Reserva (null, 9L, 1 ,new Date(), new Date());
+        when (service.buscarPorId(1L)).thenReturn(Datos.crearReserva());
+        when(service.crearReserva(any())).thenThrow(NoSuchElementException.class);
+        mvc.perform(put( "/api/v1/reservas/6").contentType (MediaType.APPLICATION_JSON)
+                        .content (mapper.writeValueAsString(reserva)))
+                .andExpect(status().isNotFound());
+
     }
 
 }

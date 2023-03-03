@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
@@ -21,10 +20,11 @@ public class Reserva implements Serializable {
     private Long idReserva;
     @Column(name = "id_habitacion")
     private Long idHabitacion;
+    @Column(name = "dias_reserva")
+    private int diasDeReserva;
     @Column(name = "fecha_entrada")
     private Date fechaEntrada;
     @Column(name = "fecha_salida")
     private Date fechaSalida;
-    @Column(name = "estado_reservacion")
-    private String estadoReservacion;
+
 }

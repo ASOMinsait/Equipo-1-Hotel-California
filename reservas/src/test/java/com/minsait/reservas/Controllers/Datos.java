@@ -8,9 +8,9 @@ import java.util.Optional;
 
 public class Datos {
     public static Optional<Reserva> crearReserva(){
-        return Optional. of (new Reserva(1L, 11L,new Date(),new Date(),"Disponible"));
+        return Optional. of (new Reserva(1L, 10L,1,new Date(),new Date()));
     }
     public static Optional<Reserva> crearReserva2(){
-        return Optional. of (new Reserva(2L, 10L,new Date(),new Date(),"Disponible"));
+        return Optional. of (new Reserva(2L, 11L,2,new Date(),new Date()));
     }
 }

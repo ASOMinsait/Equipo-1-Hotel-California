@@ -1,7 +1,9 @@
 package com.minsait.reservas.Service;
 
+import com.minsait.reservas.Configurations.SwaggerConfig;
 import com.minsait.reservas.Models.Reserva;
 import com.minsait.reservas.Repositories.ReservaRepository;
+import com.minsait.reservas.ReservasApplication;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -45,7 +47,7 @@ class ReservaServiceImplTest {
 
     @Test
     void testCrearReserva() {
-        Reserva reserva=new Reserva(null, 5L, new Date(),new Date(),"Disponible");
+        Reserva reserva=new Reserva(null, 5L, 10,new Date(),new Date());
         when(reservaService.crearReserva(any(Reserva.class))).then(invocation ->
         {
             Reserva reservaTemporal=invocation.getArgument(0);
@@ -65,5 +67,16 @@ class ReservaServiceImplTest {
         boolean bool=reservaService
                 .eliminar(1L);
         assertTrue(bool);
+    }
+
+    @Test
+    void testBuscarHabitacionPorId(){
+        when(reservaService
+                .buscarHabitacionPorId(anyLong()))
+                .thenReturn(Datos.crearReserva());
+        Reserva reserva=reservaService
+                .buscarHabitacionPorId(11L).get();
+        assertTrue(reserva.getIdReserva()!=null);
+
     }
 }
