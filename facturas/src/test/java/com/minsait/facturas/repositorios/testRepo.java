@@ -3,7 +3,10 @@ package com.minsait.facturas.repositorios;
 
 import com.minsait.facturas.Datos;
 import com.minsait.facturas.FacturasApplication;
+<<<<<<< HEAD
 import com.minsait.facturas.configuration.SwaggerConfig;
+=======
+>>>>>>> feature_reservas
 import com.minsait.facturas.models.Factura;
 import com.minsait.facturas.repositories.FacturaRepository;
 import com.minsait.facturas.services.FacturaServiceImp;
@@ -87,6 +90,12 @@ public class testRepo {
         Factura facturaNueva = facturaService.guardar(factura);
         assertTrue(facturaNueva.getIdFacturas() == 3L);
     }
+    @Test
+    public
+    void main() {
+        FacturasApplication.main(new String[]{});
+    }
+
 
     @Test
     public void main() {

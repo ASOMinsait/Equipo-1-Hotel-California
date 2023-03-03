@@ -6,4 +6,8 @@
 /habitaciones/.mvn
 /habitaciones/mvnw
 /habitaciones/mvnw.cmd
+<<<<<<< HEAD
 /habitaciones/target
+=======
+/habitaciones/target
+>>>>>>> feature_reservas

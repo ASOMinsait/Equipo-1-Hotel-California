@@ -24,7 +24,6 @@ import org.springframework.context.annotation.Configuration;
                             .description("springdoc-openapi")
                             .url("http://springdoc.org")
                     );
-
         }
     }
 
