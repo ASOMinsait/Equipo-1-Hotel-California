@@ -44,7 +44,7 @@ public class FacturaController {
         }
     }
 
-    @DeleteMapping("/")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id) {
         if (facturaService.eliminar(id))
             return ResponseEntity.noContent().build();
