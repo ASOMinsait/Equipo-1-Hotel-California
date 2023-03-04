@@ -3,20 +3,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-<<<<<<< HEAD
-=======
-
->>>>>>> feature_reservas
 	<parent>
 		<groupId>com.minsait</groupId>
 		<artifactId>Proyecto-Microservicios</artifactId>
 		<version>1.0-SNAPSHOT</version>
 
 	</parent>
-<<<<<<< HEAD
 
-=======
->>>>>>> feature_reservas
 	<groupId>com.minsait</groupId>
 	<artifactId>habitaciones</artifactId>
 	<version>0.0.1-SNAPSHOT</version>

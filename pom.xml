@@ -19,10 +19,7 @@
     <modules>
         <module>facturas</module>
         <module>habitaciones</module>
-<<<<<<< HEAD
-=======
         <module>reservas</module>
->>>>>>> feature_reservas
     </modules>
     <properties>
         <maven.compiler.source>19</maven.compiler.source>

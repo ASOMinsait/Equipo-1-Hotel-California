@@ -44,7 +44,6 @@ public class FacturaController {
         }
     }
 
-<<<<<<< HEAD
     @PutMapping("/{id}")
     public ResponseEntity<Factura> actualizar(@PathVariable Long id,@RequestBody Factura factura){
         try{
@@ -57,8 +56,7 @@ public class FacturaController {
         }
     }
 
-=======
->>>>>>> feature_reservas
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id) {
         if (facturaService.eliminar(id))

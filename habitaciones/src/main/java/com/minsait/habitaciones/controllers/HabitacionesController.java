@@ -3,14 +3,17 @@ package com.minsait.habitaciones.controllers;
 
 import com.minsait.habitaciones.models.Habitacion;
 import com.minsait.habitaciones.services.HabitacionService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/habitaciones")
@@ -71,6 +74,21 @@ public class HabitacionesController {
     public ResponseEntity<?> eliminar(@PathVariable Long id) {
         if (habitacionService.eliminar(id))
             return ResponseEntity.noContent().build();
+        return ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> editar( @RequestBody Habitacion habitacion, @PathVariable Long id) {
+
+        Optional<Habitacion> o = habitacionService.buscarPorId(id);
+        if (o.isPresent()) {
+            Habitacion habitacionBd = o.get();
+            habitacionBd.setEstatus(habitacion.getEstatus());
+            habitacionBd.setMaxPersonas(habitacion.getMaxPersonas());
+            habitacionBd.setPrecioNoche(habitacion.getPrecioNoche());
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(habitacionService.guardar(habitacionBd));
+        }
         return ResponseEntity.notFound().build();
     }
 }
