@@ -2,6 +2,7 @@ package com.minsait.reservas.Controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.minsait.reservas.Models.Reserva;
+import com.minsait.reservas.Service.HabitacionesServicesFeign;
 import com.minsait.reservas.Service.ReservaService;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,6 +34,9 @@ class ReservaControllerTest {
     private MockMvc mvc;
     @MockBean
     private ReservaService service;
+    @MockBean
+private    HabitacionesServicesFeign habitacionesServicesFeign;
+
     ObjectMapper mapper;
     @BeforeEach
     void setUp() {

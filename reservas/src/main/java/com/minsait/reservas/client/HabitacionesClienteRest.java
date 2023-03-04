@@ -21,7 +21,7 @@ public interface HabitacionesClienteRest {
     public ResponseEntity<Habitacion> buscarPorId(@PathVariable Long id);
 
     @GetMapping("/max/{max}")
-    public List<Habitacion> buscarPorMaximoPersonas(@PathVariable Integer max);
+    public ResponseEntity<List<Habitacion>> buscarPorMaximoPersonas(@PathVariable Integer max);
 
     @PutMapping("/reservar/{id}")
     public ResponseEntity<Habitacion> reservarHabitacion(@PathVariable Long id);

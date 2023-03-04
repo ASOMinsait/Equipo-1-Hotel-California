@@ -54,8 +54,14 @@ public class HabitacionesController {
     public ResponseEntity<Habitacion> reservarHabitacion(@PathVariable Long id) {
         try {
             Habitacion habitacion = habitacionService.buscarPorId(id).get();
-            habitacionService.reservarHabitacion(habitacion.getIdHabitacion());
-            return ResponseEntity.ok(habitacion);
+         if (habitacion.getEstatus()==1){
+             habitacionService.reservarHabitacion(habitacion.getIdHabitacion());
+             return ResponseEntity.ok(habitacionService.buscarPorId(id).get());
+
+         }else{
+             return ResponseEntity.notFound().build();
+         }
+
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
         }

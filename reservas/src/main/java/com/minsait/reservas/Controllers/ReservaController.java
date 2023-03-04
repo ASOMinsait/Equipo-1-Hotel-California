@@ -4,6 +4,8 @@ import com.minsait.reservas.Models.Habitacion;
 import com.minsait.reservas.Models.Reserva;
 import com.minsait.reservas.Service.HabitacionesServicesFeign;
 import com.minsait.reservas.Service.ReservaService;
+import com.minsait.reservas.exceptions.HabitacionNotFoundException;
+import com.minsait.reservas.exceptions.HabitacionesException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -42,8 +44,19 @@ public class ReservaController {
 
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
-    public Reserva save(@RequestBody Reserva reserva) {
-        return service.crearReserva(reserva);
+    public ResponseEntity<Reserva> save(@RequestBody Reserva reserva) {
+
+        try {
+            Habitacion habitacion = habitacionesServicesFeign.buscarPorId(reserva.getIdHabitacion()).get();
+            if (habitacion.getEstatus() == 1) {
+                habitacionesServicesFeign.reservarHabitacion(reserva.getIdHabitacion());
+                return new ResponseEntity<>(service.crearReserva(reserva), HttpStatus.CREATED);
+            } else {
+                return ResponseEntity.badRequest().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @DeleteMapping("/{id}")
@@ -70,11 +83,7 @@ public class ReservaController {
     @GetMapping("/habitaciones/")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<Habitacion>> buscarTodasHabitaciones() {
-        try {
         return ResponseEntity.ok(habitacionesServicesFeign.buscarTodas());
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
     }
 
 
@@ -87,6 +96,29 @@ public class ReservaController {
     @GetMapping("/habitaciones/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Habitacion> buscarHabitacionPorId(@PathVariable Long id) {
-        return ResponseEntity.ok(habitacionesServicesFeign.buscarPorId(id).get());
+        try {
+            Habitacion habitacion = habitacionesServicesFeign.buscarPorId(id).get();
+            return ResponseEntity.ok(habitacion);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/habitaciones/max/{max}")
+    public ResponseEntity<List<Habitacion>> buscarPorMaximoPersona(@PathVariable Integer max) {
+        return ResponseEntity.ok(habitacionesServicesFeign.buscarPorMaxPersonas(max));
+    }
+
+
+    @PutMapping("/habitaciones/reservar/{id}")
+    public ResponseEntity<Habitacion> reservarHabitacion(@PathVariable Long id) {
+        try {
+            Habitacion habitacion = habitacionesServicesFeign.buscarPorId(id).get();
+            habitacionesServicesFeign.reservarHabitacion(habitacion.getIdHabitacion());
+            return ResponseEntity.ok(habitacionesServicesFeign.buscarPorId(id).get());
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        }
+
     }
 }

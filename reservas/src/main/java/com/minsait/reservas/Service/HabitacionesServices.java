@@ -20,7 +20,5 @@ public interface HabitacionesServices {
 
     void reservarHabitacion(Long id);
 
-    Habitacion guardar(Habitacion habitacion);
 
-    boolean eliminar(Long id);
 }
