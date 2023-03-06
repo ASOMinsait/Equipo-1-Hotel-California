@@ -26,7 +26,8 @@ public class HabitacionesServicesFeign implements HabitacionesServices {
         if (response.getStatusCode().is2xxSuccessful()) {
             return response.getBody();
         } else {
-            throw new   NoSuchElementException();        }
+            throw new NoSuchElementException();
+        }
     }
 
     @Override
@@ -35,22 +36,21 @@ public class HabitacionesServicesFeign implements HabitacionesServices {
         if (response.getStatusCode().is2xxSuccessful()) {
             return response.getBody();
         } else {
-            throw new   NoSuchElementException();        }
+            throw new NoSuchElementException();
+        }
 
     }
 
     @Override
     public Optional<Habitacion> buscarPorId(Long id) throws NoSuchElementException {
-        try {
 
-            ResponseEntity<Habitacion> response = habitacionesClienteRest.buscarPorId(id);
-            if (response.getStatusCode().is2xxSuccessful()) {
-                return Optional.of(response.getBody());
-            }
-            throw new NoSuchElementException();
-        } catch (Exception e) {
-            throw new NoSuchElementException();
+
+        ResponseEntity<Habitacion> response = habitacionesClienteRest.buscarPorId(id);
+        if (response.getStatusCode().is2xxSuccessful()) {
+            return Optional.of(response.getBody());
         }
+        throw new NoSuchElementException();
+
     }
 
     @Override

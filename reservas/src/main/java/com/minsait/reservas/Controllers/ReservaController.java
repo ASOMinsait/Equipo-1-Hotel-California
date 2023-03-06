@@ -1,7 +1,9 @@
 package com.minsait.reservas.Controllers;
 
+import com.minsait.reservas.Models.Factura;
 import com.minsait.reservas.Models.Habitacion;
 import com.minsait.reservas.Models.Reserva;
+import com.minsait.reservas.Service.FacturaServiceFeign;
 import com.minsait.reservas.Service.HabitacionesServicesFeign;
 import com.minsait.reservas.Service.ReservaService;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +24,10 @@ public class ReservaController {
 
     @Autowired
     HabitacionesServicesFeign habitacionesServicesFeign;
+
+
+    @Autowired
+    FacturaServiceFeign facturaServiceFeign;
 
     @GetMapping("/")
     @ResponseStatus(HttpStatus.OK)
@@ -118,5 +124,16 @@ public class ReservaController {
             return ResponseEntity.notFound().build();
         }
 
+    }
+
+
+    @PostMapping("/factura/")
+    public ResponseEntity<Factura> crearFactura(@RequestBody Reserva reserva) {
+        try {
+            Reserva reservacion = service.buscarPorId(reserva.getIdReserva()).get();
+            return ResponseEntity.ok(facturaServiceFeign.crearFactura(reservacion));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
