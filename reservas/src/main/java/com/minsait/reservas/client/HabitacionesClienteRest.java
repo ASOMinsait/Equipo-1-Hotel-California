@@ -26,13 +26,6 @@ public interface HabitacionesClienteRest {
     @PutMapping("/reservar/{id}")
     public ResponseEntity<Habitacion> reservarHabitacion(@PathVariable Long id);
 
-    @PostMapping("/")
-    public ResponseEntity<Habitacion> guardar(@RequestBody Habitacion habitacion);
-
-    @PutMapping("/{id}")
-    public ResponseEntity<?> editar(@RequestBody Habitacion habitacion, @PathVariable Long id);
 
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> eliminar(@PathVariable Long id);
 }

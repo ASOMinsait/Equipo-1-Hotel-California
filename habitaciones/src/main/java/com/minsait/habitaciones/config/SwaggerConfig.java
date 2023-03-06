@@ -14,8 +14,8 @@ public class SwaggerConfig {
     public OpenAPI SpringOpenApi() {
         return new OpenAPI()
                 .addServersItem(new Server().url("/"))
-                .info(new Info().title("Factura microservicio")
-                        .description("Microservicio para administrar las facturas")
+                .info(new Info().title("Habitaciones microservicio")
+                        .description("Microservicio para administrar las habitaciones")
                         .version("0.0.1-SNAPSHOT")
                 ).externalDocs(new ExternalDocumentation()
                         .description("springdoc-openapi")

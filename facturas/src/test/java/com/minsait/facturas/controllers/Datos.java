@@ -13,11 +13,11 @@ public class Datos {
 
 
 
-        return Optional.of(new Factura(1L,1L,Date.from(Instant.now()),new BigDecimal(200),"TARJETA","PAGADO"));
+        return Optional.of(new Factura(1L,1L,Date.from(Instant.now()),new BigDecimal(200)));
     }
 
     public static Optional<Factura> crearFactura2()  {
 
-        return Optional.of(new Factura(1L,1L, Date.from(Instant.now()) ,new BigDecimal(2010),"EFECTIVO","RESERVADO"));
+        return Optional.of(new Factura(1L,1L, Date.from(Instant.now()) ,new BigDecimal(2010)));
     }
 }

@@ -1,8 +1,10 @@
 package com.minsait.facturas.controllers;
 
 import com.minsait.facturas.models.Factura;
-import com.minsait.facturas.repositories.FacturaRepository;
+import com.minsait.facturas.models.Habitacion;
+import com.minsait.facturas.models.Reservacion;
 import com.minsait.facturas.services.FacturaService;
+import com.minsait.facturas.services.HabitacionesServicesFeign;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,9 @@ public class FacturaController {
 
     @Autowired
     FacturaService facturaService;
+
+    @Autowired
+    HabitacionesServicesFeign habitacionesServicesFeign;
 
     @GetMapping("/")
     public ResponseEntity<List<Factura>> listar() {
@@ -36,22 +41,23 @@ public class FacturaController {
 
 
     @PostMapping("/")
-    public ResponseEntity<Factura> guardar(@RequestBody Factura factura) {
-        try {
+    public ResponseEntity<Factura> guardar(@RequestBody Reservacion reservacion) {
+
+            Habitacion habitacion = habitacionesServicesFeign.buscarPorId(reservacion.getIdHabitacion()).get();
+            Factura factura = new Factura(null, reservacion.getIdReserva(), null, null);
+            factura.calcularTotal(reservacion, habitacion);
             return new ResponseEntity<>(facturaService.guardar(factura), HttpStatus.CREATED);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Factura> actualizar(@PathVariable Long id,@RequestBody Factura factura){
-        try{
-            Factura facturaActualizada= facturaService.buscarPorId(id).orElseThrow();
-            facturaActualizada.setEstadoPago(factura.getEstadoPago());
+    public ResponseEntity<Factura> actualizar(@PathVariable Long id, @RequestBody Factura factura) {
+        try {
+            Factura facturaActualizada = facturaService.buscarPorId(id).orElseThrow();
+
             facturaActualizada.setTotalReserva(factura.getTotalReserva());
             return new ResponseEntity<>(facturaService.guardar(facturaActualizada), HttpStatus.CREATED);
-        }catch (NoSuchElementException e){
+        } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
         }
     }

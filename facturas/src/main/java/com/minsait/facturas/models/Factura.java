@@ -1,10 +1,13 @@
 package com.minsait.facturas.models;
 
 
+import com.minsait.facturas.helpers.CalcularDias;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.Temporal;
 import java.util.Date;
 
 @Data
@@ -18,11 +21,9 @@ import java.util.Date;
 public class Factura {
 
 
-
     static private final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     @Column(name = "id_factura")
     private Long idFacturas;
 
@@ -33,11 +34,18 @@ public class Factura {
     private Date fechaEmision;
     @Column(name = "total_reservacion")
     private BigDecimal totalReserva;
-    @Column(name = "metodo_pago")
-    private String metodoPago;
-    @Column(name = "estado_pago")
-    private String estadoPago;
 
+
+    public void calcularTotal(Reservacion reservacion, Habitacion habitacion) {
+
+
+        long diasEntreFechas = CalcularDias.calcularDias(reservacion.getFechaEntrada(), reservacion.getFechaSalida());
+
+        this.totalReserva = diasEntreFechas!=0 ?habitacion.getPrecioNoche().multiply(new BigDecimal(diasEntreFechas)) : habitacion.getPrecioNoche();
+
+
+
+    }
 
 
 }

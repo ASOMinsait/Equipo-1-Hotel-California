@@ -3,10 +3,10 @@ package com.minsait.facturas.repositorios;
 
 import com.minsait.facturas.Datos;
 import com.minsait.facturas.FacturasApplication;
-<<<<<<< HEAD
-import com.minsait.facturas.configuration.SwaggerConfig;
-=======
->>>>>>> feature_reservas
+
+import com.minsait.facturas.configuration.Config;
+
+
 import com.minsait.facturas.models.Factura;
 import com.minsait.facturas.repositories.FacturaRepository;
 import com.minsait.facturas.services.FacturaServiceImp;
@@ -14,10 +14,12 @@ import com.minsait.facturas.services.FacturaServiceImp;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
+
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.*;
@@ -34,7 +36,7 @@ public class testRepo {
     @InjectMocks
     FacturaServiceImp facturaService;
     @InjectMocks
-    SwaggerConfig swaggerConfig;
+    Config swaggerConfig;
 
     @Test
     void testFindAll() {
@@ -65,8 +67,7 @@ public class testRepo {
         assertTrue(factura.get().getIdReservacion() != null);
         assertTrue(factura.get().getFechaEmision() != null);
         assertTrue(factura.get().getTotalReserva() != null);
-        assertTrue(factura.get().getMetodoPago() != null);
-        assertTrue(factura.get().getEstadoPago() != null);
+
     }
 
 
@@ -80,7 +81,7 @@ public class testRepo {
 
     @Test
     void testGuardar() {
-        Factura factura = new Factura(null, 3L, Date.from(Instant.now()), new BigDecimal(650), "TARJETA", "PAGADO");
+        Factura factura = new Factura(null, 3L, Date.from(Instant.now()), new BigDecimal(650));
         when(facturaService.guardar(factura)).then(invocation ->
         {
             Factura facturaTemporal = invocation.getArgument(0);
@@ -90,11 +91,8 @@ public class testRepo {
         Factura facturaNueva = facturaService.guardar(factura);
         assertTrue(facturaNueva.getIdFacturas() == 3L);
     }
-    @Test
-    public
-    void main() {
-        FacturasApplication.main(new String[]{});
-    }
+
+
 
 
     @Test
@@ -105,7 +103,7 @@ public class testRepo {
     @Test
     public void swagger() {
 
-        String info= swaggerConfig.SpringOpenApi().getInfo().getVersion();
+        String info = swaggerConfig.SpringOpenApi().getInfo().getVersion();
         assertTrue(info.equals("0.0.1-SNAPSHOT"));
     }
 }

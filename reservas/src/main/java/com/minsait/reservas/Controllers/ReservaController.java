@@ -4,8 +4,6 @@ import com.minsait.reservas.Models.Habitacion;
 import com.minsait.reservas.Models.Reserva;
 import com.minsait.reservas.Service.HabitacionesServicesFeign;
 import com.minsait.reservas.Service.ReservaService;
-import com.minsait.reservas.exceptions.HabitacionNotFoundException;
-import com.minsait.reservas.exceptions.HabitacionesException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

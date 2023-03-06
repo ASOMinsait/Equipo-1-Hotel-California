@@ -2,8 +2,7 @@ package com.minsait.reservas.Service;
 
 import com.minsait.reservas.Models.Habitacion;
 import com.minsait.reservas.client.HabitacionesClienteRest;
-import com.minsait.reservas.exceptions.HabitacionNotFoundException;
-import com.minsait.reservas.exceptions.HabitacionesException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,8 +26,7 @@ public class HabitacionesServicesFeign implements HabitacionesServices {
         if (response.getStatusCode().is2xxSuccessful()) {
             return response.getBody();
         } else {
-            throw new HabitacionesException("Error al obtener las habitaciones: " + response.getStatusCode());
-        }
+            throw new   NoSuchElementException();        }
     }
 
     @Override
@@ -37,8 +35,7 @@ public class HabitacionesServicesFeign implements HabitacionesServices {
         if (response.getStatusCode().is2xxSuccessful()) {
             return response.getBody();
         } else {
-            throw new HabitacionesException("Error al obtener las habitaciones: " + response.getStatusCode());
-        }
+            throw new   NoSuchElementException();        }
 
     }
 
@@ -47,15 +44,12 @@ public class HabitacionesServicesFeign implements HabitacionesServices {
         try {
 
             ResponseEntity<Habitacion> response = habitacionesClienteRest.buscarPorId(id);
-        if (response.getStatusCode().is2xxSuccessful()) {
-            return Optional.of(response.getBody());
-        } else if (response.getStatusCode() == HttpStatus.NOT_FOUND) {
-            throw new HabitacionNotFoundException("No se encontró la habitación con ID: " + id);
-        } else {
-            throw new HabitacionesException("Error al obtener la habitación con ID: " + id + ", código de estado: " + response.getStatusCode());
-        }
-        } catch (NoSuchElementException e) {
-            throw new HabitacionNotFoundException("No se encontró la habitación con ID: " + id);
+            if (response.getStatusCode().is2xxSuccessful()) {
+                return Optional.of(response.getBody());
+            }
+            throw new NoSuchElementException();
+        } catch (Exception e) {
+            throw new NoSuchElementException();
         }
     }
 
@@ -65,7 +59,7 @@ public class HabitacionesServicesFeign implements HabitacionesServices {
         if (response.getStatusCode().is2xxSuccessful()) {
             return response.getBody();
         } else {
-            throw new HabitacionesException("Error al obtener las habitaciones: " + response.getStatusCode());
+            throw new NoSuchElementException();
         }
     }
 

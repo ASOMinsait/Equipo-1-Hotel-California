@@ -84,7 +84,7 @@ public class testingControllers {
     @Test
     void testGuardar() throws Exception {
 
-        Factura factura=new Factura(null,3L, Date.from(Instant.now()),new BigDecimal(650),"TARJETA","PAGADO");
+        Factura factura=new Factura(null,3L, Date.from(Instant.now()),new BigDecimal(650));
         when(service.guardar(factura)).then(invocation ->
         {
            Factura facturaTemporal=invocation.getArgument(0);
@@ -104,7 +104,7 @@ public class testingControllers {
 
     @Test
     void testActualizar() throws Exception {
-        Factura factura=new Factura(null,3L, Date.from(Instant.now()),new BigDecimal(650),"TARJETA","PAGADO");
+        Factura factura=new Factura(null,3L, Date.from(Instant.now()),new BigDecimal(650));
         when(service.buscarPorId(3L)).thenReturn(Optional.of(Datos.crearFactura1().get()));
         when(service.guardar(any())).then(invocation -> {
             Factura facturaActualizada=factura;
