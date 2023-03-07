@@ -57,11 +57,9 @@ public class HabitacionesController {
          if (habitacion.getEstatus()==1){
              habitacionService.reservarHabitacion(habitacion.getIdHabitacion());
              return ResponseEntity.ok(habitacionService.buscarPorId(id).get());
-
          }else{
              return ResponseEntity.notFound().build();
          }
-
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
         }

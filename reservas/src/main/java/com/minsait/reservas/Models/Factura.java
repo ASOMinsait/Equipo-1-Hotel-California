@@ -23,9 +23,5 @@ public class Factura {
 
     private BigDecimal totalReservacion;
 
-    private String metodoPago;
-
-    private String estadoPago;
-
 
 }

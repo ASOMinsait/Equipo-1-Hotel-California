@@ -22,6 +22,6 @@ public class Datos {
         return Optional. of (new Habitacion(2L, 5, new BigDecimal(1500), 0));
     }
     public static Optional<Factura> crearFactura(){
-        return Optional. of (new Factura(1L,1L,new Date(),new BigDecimal(5000),"Tarjeta de credito","Realizado"));
+        return Optional. of (new Factura(1L,1L,new Date(),new BigDecimal(5000)));
     }
 }

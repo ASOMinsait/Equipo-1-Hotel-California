@@ -7,7 +7,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 class FacturaTest {
     @Test
@@ -17,14 +16,12 @@ class FacturaTest {
         factura.setIdReservacion(1L);
         factura.setFechaEmision(new Date());
         factura.setTotalReservacion(new BigDecimal(3000));
-        factura.setMetodoPago("");
-        factura.setEstadoPago("");
+
         factura.getIdFactura();
         factura.getIdReservacion();
         factura.getFechaEmision();
         factura.getTotalReservacion();
-        factura.getMetodoPago();
-        factura.getEstadoPago();
-        Factura factura1=new Factura(2L,2L,new Date(),new BigDecimal(5000),"","");
+
+        Factura factura1=new Factura(2L,2L,new Date(),new BigDecimal(5000));
     }
 }

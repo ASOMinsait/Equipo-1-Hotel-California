@@ -69,6 +69,13 @@ public class HabitacionesControllerTest {
                 .andExpect(jsonPath("$.idHabitacion", Matchers.is(1)))
                 .andExpect(jsonPath("$.maxPersonas").value(3));
     }
+    @Test
+    void testFindByIdIfNotExist() throws Exception {
+        Long id = 223l;
+//        when(habitacionService.buscarPorId(id)).thenReturn(Datos.crearHabitacion1());
+        mvc.perform(get("/api/v1/habitaciones/{id}", id).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
 
 
     @Test
@@ -113,19 +120,61 @@ public class HabitacionesControllerTest {
     }
 
     @Test
+    void testEditar() throws Exception {
+        Habitacion habitacionExistente = Datos.crearHabitacion1().get();
+        Habitacion habitacionEditar = new Habitacion();
+        habitacionEditar.setMaxPersonas(2);
+        habitacionEditar.setPrecioNoche(new BigDecimal(800));
+        when(habitacionService.buscarPorId(1L)).thenReturn(Optional.of(habitacionExistente));
+        when(habitacionService.guardar(habitacionExistente)).thenReturn(habitacionEditar);
+
+        mvc.perform(put("/api/v1/habitaciones/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(habitacionEditar)))
+                .andExpect(status().isCreated())
+
+                .andExpect(jsonPath("$.maxPersonas", Matchers.is(2)))
+                .andExpect(jsonPath("$.precioNoche", Matchers.is(800)));
+
+        verify(habitacionService).buscarPorId(1L);
+
+    }
+
+    @Test
     void testDeleteSiNoExiste() throws Exception {
         Long id = 11L;
         when(habitacionService.eliminar(id)).thenReturn(false);
-        mvc.perform(delete("/api/v1/habitaciones/{id}",id)).andExpect(status().isNotFound());
+        mvc.perform(delete("/api/v1/habitaciones/{id}", id)).andExpect(status().isNotFound());
     }
+
     @Test
     void testDeleteSiExiste() throws Exception {
-        Long id=1L;
+        Long id = 1L;
         when(habitacionService.buscarPorId(id)).thenReturn(Optional.of(Datos.crearHabitacion1().get()));
 
         when(habitacionService.eliminar(id)).thenReturn(true);
-        mvc.perform(delete("/api/v1/habitaciones/{id}",id)).
+        mvc.perform(delete("/api/v1/habitaciones/{id}", id)).
                 andExpect(status().isNoContent());
     }
 
+    @Test
+    void testGuardarConExeption() throws Exception {
+        Habitacion habitacionGuardar =Datos.crearHabitacion1().get();
+        when(habitacionService.guardar(habitacionGuardar)).thenThrow(new RuntimeException("Error al guardar la habitación"));
+        mvc.perform(post("/api/v1/habitaciones/")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(habitacionGuardar)))
+                .andExpect(status().isBadRequest());
+
+        // Verificar que se haya llamado el método guardar con los argumentos correctos
+        verify(habitacionService).guardar(habitacionGuardar);
+    }
+
+    @Test
+    void testReservarSiNoExiste() throws Exception{
+        given(habitacionService.buscarPorId(1L)).willReturn(Optional.of(Datos.crearHabitacion1().get()));
+        mvc.perform(put("/api/v1/habitaciones/reservar/{id}", 11L).contentType(MediaType.APPLICATION_JSON))
+                            .andExpect(status().isNotFound())
+        ;
+    }
 }
