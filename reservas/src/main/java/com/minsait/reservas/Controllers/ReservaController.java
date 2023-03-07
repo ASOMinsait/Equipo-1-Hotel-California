@@ -77,7 +77,6 @@ public class ReservaController {
             reservaActualizada.setIdHabitacion(reserva.getIdHabitacion());
             reservaActualizada.setFechaEntrada(reserva.getFechaEntrada());
             reservaActualizada.setFechaSalida(reserva.getFechaSalida());
-            reservaActualizada.setEstadoReservacion(reserva.getEstadoReservacion());
             return new ResponseEntity<>(service.crearReserva(reservaActualizada), HttpStatus.CREATED);
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();

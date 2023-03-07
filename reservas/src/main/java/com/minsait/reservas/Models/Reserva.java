@@ -8,7 +8,6 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
-@Data
 @Setter
 @Getter
 @AllArgsConstructor
@@ -25,6 +24,4 @@ public class Reserva implements Serializable {
     private Date fechaEntrada;
     @Column(name = "fecha_salida")
     private Date fechaSalida;
-    @Column(name = "estado_reservacion")
-    private String estadoReservacion;
 }
