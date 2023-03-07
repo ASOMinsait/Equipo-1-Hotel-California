@@ -1,0 +1,90 @@
+version: "3.9"
+services:
+  mysql_reservas:
+    image: mysql:8
+    ports:
+      - "3309:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: reservas
+      MYSQL_DATABASE: reservas
+    volumes:
+      - data-mysql-reservas:/var/lib/mysql
+    restart: always
+    networks:
+      - hotel
+
+  mysql_habitaciones:
+    image: mysql:8
+    ports:
+      - "3308:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: habitaciones
+      MYSQL_DATABASE: habitaciones
+    volumes:
+      - data-mysql-habitaciones:/var/lib/mysql
+    restart: always
+    networks:
+      - hotel
+
+  mysql_facturas:
+    image: mysql:8
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: facturas
+      MYSQL_DATABASE: facturas
+    volumes:
+      - data-mysql-facturas:/var/lib/mysql
+    restart: always
+    networks:
+      - hotel
+
+  reservaciones:
+    build:
+      context: ./
+      dockerfile: ./reservas/Dockerfile
+    ports:
+      - "8003:8003"
+    env_file: ./reservas/.env
+    networks:
+      - hotel
+    depends_on:
+      - mysql_reservas
+    restart: always
+
+
+  habitaciones:
+    build:
+      context: ./
+      dockerfile: ./habitaciones/Dockerfile
+    ports:
+      - "8002:8002"
+    env_file: ./habitaciones/.env
+    networks:
+      - hotel
+    depends_on:
+      - mysql_habitaciones
+    restart: always
+
+
+  facturas:
+    build:
+      context: ./
+      dockerfile: ./facturas/Dockerfile
+    ports:
+      - "8001:8001"
+    env_file: ./facturas/.env
+    networks:
+      - hotel
+    depends_on:
+      - mysql_facturas
+    restart: always
+
+
+volumes:
+  data-mysql-facturas:
+  data-mysql-habitaciones:
+  data-mysql-reservas:
+
+networks:
+   hotel:

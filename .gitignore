@@ -1,13 +1,4 @@
 /.idea
-/facturas/.mvn
-/facturas/mvnw
-/facturas/mvnw.cmd
 /facturas/target
-/habitaciones/.mvn
-/habitaciones/mvnw
-/habitaciones/mvnw.cmd
-<<<<<<< HEAD
 /habitaciones/target
-=======
-/habitaciones/target
->>>>>>> feature_reservas
+
