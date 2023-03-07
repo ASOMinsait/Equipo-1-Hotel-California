@@ -45,7 +45,7 @@ class ReservaServiceImplTest {
 
     @Test
     void testCrearReserva() {
-        Reserva reserva=new Reserva(null, 5L, new Date(),new Date(),"Disponible");
+        Reserva reserva=new Reserva(null, 5L, new Date(),new Date());
         when(reservaService.crearReserva(any(Reserva.class))).then(invocation ->
         {
             Reserva reservaTemporal=invocation.getArgument(0);
