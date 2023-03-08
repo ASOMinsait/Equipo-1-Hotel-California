@@ -60,6 +60,4 @@ class FacturaServiceFeignTest {
         assertEquals(factura, facturaCreada);
 
     }
-
-
 }

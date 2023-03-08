@@ -68,7 +68,6 @@ class ReservaControllerTest {
                 .andExpect(jsonPath("$[0].idHabitacion").value(1))
                 .andExpect(jsonPath("$[1].idHabitacion").value(2));
     }
-
     @Test
     void testFindById() throws Exception {
         when(service.buscarPorId(anyLong())).thenReturn(Datos.crearReserva());
@@ -78,7 +77,6 @@ class ReservaControllerTest {
                 .andExpect(jsonPath("$.idReserva").value(1L))
                 .andExpect(jsonPath("$.idHabitacion").value(1));
     }
-
     @Test
     void testFindByIdIfDoesntExist() throws Exception {
         when(service.buscarPorId(anyLong())).thenThrow(NoSuchElementException.class);
@@ -95,8 +93,6 @@ class ReservaControllerTest {
             reservaTemporal.setIdReserva(3L);
             return reservaTemporal;
         });
-
-
     }
 
     @Test
