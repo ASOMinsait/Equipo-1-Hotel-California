@@ -92,13 +92,18 @@ public class testRepo {
         assertTrue(facturaNueva.getIdFacturas() == 3L);
     }
 
-
-
-
     @Test
-    public void main() {
-        FacturasApplication.main(new String[]{});
+    void testFindByReservacionId() {
+        when(facturaService.buscarPorIdReservacion(anyLong())).thenReturn(Datos.crearFactura1());
+        Factura factura = facturaService.buscarPorIdReservacion(1L).get();
+        assertThat(factura).isNotNull();
     }
+
+
+//    @Test
+//    public void main() {
+//        FacturasApplication.main(new String[]{});
+//    }
 
     @Test
     public void swagger() {
