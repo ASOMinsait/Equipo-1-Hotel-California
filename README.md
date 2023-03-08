@@ -10,4 +10,7 @@ Reservaciones: Enfocado naturalmente en generar reservaciones controlando el est
 Comandos para configuracion del proyecto Abir una terminal de Git Bash en el directorio donde vaya a guardar el proyecto Mediante la terminal Git Bash ejecutar el comando git clone https://github.com/ASOMinsait/Equipo-1-Hotel-California.git Seguidamente en la terminal ingresar el siguiente comando  cd Equipo-1-Hotel-
 
 California Finalmente ingresamos el comando  para iniciar los servicios docker-compose up --build -d
-y para detener el proyecto se utilza docker-compose down Los microservicios se ejecutaran y podran ser accesibles mediante las siguientes URLs para verficar su funcionamiento http://localhost:8001/swagger-ui/index.html  ->Facturashttp://localhost:8002/swagger-ui/index.html  ->habitacioneshttp://localhost:8003/swagger-ui/index.html  ->reservas 
+y para detener el proyecto se utilza docker-compose down Los microservicios se ejecutaran y podran ser accesibles mediante las siguientes URLs para verficar su funcionamiento 
+http://localhost:8001/swagger-ui/index.html  ->Facturas
+http://localhost:8002/swagger-ui/index.html  ->habitaciones
+http://localhost:8003/swagger-ui/index.html  ->reservas 
