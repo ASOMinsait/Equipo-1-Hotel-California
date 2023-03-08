@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.minsait.reservas.Controllers.ReservaControllerTest
 -------------------------------------------------------------------------------
-Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.397 s - in com.minsait.reservas.Controllers.ReservaControllerTest
+Tests run: 19, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.879 s - in com.minsait.reservas.Controllers.ReservaControllerTest

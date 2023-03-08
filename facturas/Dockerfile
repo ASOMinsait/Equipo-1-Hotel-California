@@ -6,9 +6,9 @@ COPY ./pom.xml /app
 COPY ./facturas/.mvn ./.mvn
 COPY ./facturas/mvnw .
 COPY ./facturas/pom.xml .
+RUN sed -i -e 's/\r$//' ./mvnw
 
 RUN ./mvnw clean package -Dmaven.test.skip -Dmaven.main.skip -Dspring-boot.repackage.skip && rm -r ./target/
-#RUN ./mvnw dependency:go-offline
 COPY ./facturas/src ./src
 
 RUN ./mvnw clean package -DskipTests
