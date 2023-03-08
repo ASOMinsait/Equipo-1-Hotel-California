@@ -1,4 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: com.minsait.reservas.Controllers.ReservaControllerTest
 -------------------------------------------------------------------------------
-Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.397 s - in com.minsait.reservas.Controllers.ReservaControllerTest
+Tests run: 20, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 3.314 s <<< FAILURE! - in com.minsait.reservas.Controllers.ReservaControllerTest
+testReserva  Time elapsed: 0.016 s  <<< FAILURE!
+java.lang.AssertionError: Status expected:<200> but was:<400>
+	at com.minsait.reservas.Controllers.ReservaControllerTest.testReserva(ReservaControllerTest.java:271)
+
