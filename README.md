@@ -12,5 +12,7 @@ Comandos para configuracion del proyecto Abir una terminal de Git Bash en el di
 California Finalmente ingresamos el comando  para iniciar los servicios docker-compose up --build -d
 y para detener el proyecto se utilza docker-compose down Los microservicios se ejecutaran y podran ser accesibles mediante las siguientes URLs para verficar su funcionamiento 
 http://localhost:8001/swagger-ui/index.html  ->Facturas
+
 http://localhost:8002/swagger-ui/index.html  ->habitaciones
+
 http://localhost:8003/swagger-ui/index.html  ->reservas 
