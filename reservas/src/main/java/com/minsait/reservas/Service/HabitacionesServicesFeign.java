@@ -65,7 +65,12 @@ public class HabitacionesServicesFeign implements HabitacionesServices {
 
     @Override
     public void reservarHabitacion(Long id) {
-        habitacionesClienteRest.reservarHabitacion(id);
+        try {
+            habitacionesClienteRest.reservarHabitacion(id);
+        }catch (NoSuchElementException e){
+            throw new NoSuchElementException();
+        }
+
     }
 
 

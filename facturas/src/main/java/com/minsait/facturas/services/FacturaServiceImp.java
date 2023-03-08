@@ -55,11 +55,4 @@ public class FacturaServiceImp implements FacturaService {
         }
         return estadoEliminado;
     }
-
-
-    @Override
-    @Transactional(readOnly = false)
-    public Factura procesarPago(Long id, String formaPago) {
-        return null;
-    }
 }

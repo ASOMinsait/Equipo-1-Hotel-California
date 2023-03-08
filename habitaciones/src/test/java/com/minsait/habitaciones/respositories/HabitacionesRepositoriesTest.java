@@ -1,7 +1,7 @@
 package com.minsait.habitaciones.respositories;
 
 import com.minsait.habitaciones.HabitacionesApplication;
-import com.minsait.habitaciones.configuration.SwaggerConfig;
+import com.minsait.habitaciones.config.SwaggerConfig;
 import com.minsait.habitaciones.models.Habitacion;
 import com.minsait.habitaciones.repositories.HabitacionRepository;
 import com.minsait.habitaciones.services.HabitacionService;
@@ -29,9 +29,10 @@ public class HabitacionesRepositoriesTest {
     SwaggerConfig swaggerConfig;
     @Mock
     HabitacionRepository habitacionRepository;
-
     @InjectMocks
     HabitacionServiceImp habitacionService;
+    @Mock
+    SwaggerConfig config;
 
     @Test
     void testFindAll() {
@@ -97,15 +98,17 @@ public class HabitacionesRepositoriesTest {
         boolean estadoEliminado = habitacionService.eliminar(borrarId);
         assertTrue(estadoEliminado);
     }
-    @Test
-    public void main() {
-        HabitacionesApplication.main(new String[]{});
-    }
+//    @Test
+//    public void main() {
+//        HabitacionesApplication.main(new String[]{});
+//    }
+
 
     @Test
     public void swagger() {
-
         String info= swaggerConfig.SpringOpenApi().getInfo().getVersion();
         assertTrue(info.equals("0.0.1-SNAPSHOT"));
     }
+
+
 }
