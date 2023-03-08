@@ -50,8 +50,8 @@ public class ReservaController {
     public ResponseEntity<Reserva> save(@RequestBody Reserva reserva) {
 
         try {
-            Habitacion habitacion = habitacionesServicesFeign.buscarPorId(reserva.getIdHabitacion()).get();
-            if (habitacion.getEstatus() == 1) {
+            int habitacion = habitacionesServicesFeign.buscarPorId(reserva.getIdHabitacion()).get().getEstatus();
+            if (habitacion == 1) {
                 habitacionesServicesFeign.reservarHabitacion(reserva.getIdHabitacion());
                 return new ResponseEntity<>(service.crearReserva(reserva), HttpStatus.CREATED);
             } else {

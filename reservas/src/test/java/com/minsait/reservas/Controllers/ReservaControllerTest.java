@@ -86,28 +86,40 @@ class ReservaControllerTest {
 
     @Test
     void testSave() throws Exception {
-        Reserva reserva = new Reserva(null, 1L, new Date(), new Date());
-        when(habitacionesServicesFeign.buscarPorId(anyLong())).thenReturn(Datos.crearHabitacion());
-        when(service.crearReserva(any(Reserva.class))).then(invocationOnMock -> {
-            Reserva reservaTemporal = invocationOnMock.getArgument(0);
+        Reserva reserva = Datos.crearReserva().get();
+        when(habitacionesServicesFeign.buscarPorId(reserva.getIdReserva())).thenReturn(Datos.crearHabitacion());
+        when(service.crearReserva(reserva)).then(invocation ->
+        {
+            Reserva reservaTemporal=invocation.getArgument(0);
             reservaTemporal.setIdReserva(3L);
             return reservaTemporal;
         });
+        ObjectMapper objectMapper = new ObjectMapper();
+        mvc.perform(post("/api/v1/reservas/")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(reserva)))
+                .andExpect(status().isCreated());
     }
 
     @Test
     void testSaveIfHabitacionDoesntAvalible() throws Exception {
-        when(habitacionesServicesFeign.buscarPorId(anyLong())).thenThrow(Error.class);
-        mvc.perform(MockMvcRequestBuilders.post("/api/v1/reservas/")
-                        .contentType(MediaType.APPLICATION_JSON))
+        Reserva reserva = Datos.crearReserva().get();
+        ObjectMapper objectMapper = new ObjectMapper();
+        when(habitacionesServicesFeign.buscarPorId(anyLong())).thenReturn(Datos.crearHabitacion2());
+        mvc.perform(post("/api/v1/reservas/")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(reserva)))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
     void testSaveIfHabitacionDoesntAvalibleException() throws Exception {
+        Reserva reserva = Datos.crearReserva().get();
+        ObjectMapper objectMapper = new ObjectMapper();
         when(habitacionesServicesFeign.buscarPorId(anyLong())).thenThrow(NoSuchElementException.class);
-        mvc.perform(MockMvcRequestBuilders.post("/api/v1/reservas/")
-                        .contentType(MediaType.APPLICATION_JSON))
+        mvc.perform(post("/api/v1/reservas/")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(reserva)))
                 .andExpect(status().isBadRequest());
     }
 
@@ -245,28 +257,5 @@ class ReservaControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(reserva)))
                 .andExpect(status().isNotFound());
-    }
-
-    @Test
-    void testReserva() throws Exception {
-        Reserva reserva = Datos.crearReserva().get();
-        when(service.buscarPorId(reserva.getIdReserva())).thenReturn(Optional.of(reserva));
-        Factura factura = new Factura(1L, 1L, new Date(),new BigDecimal(250));
-        when(service.crearReserva(reserva)).then(invocation ->
-        {
-            Reserva reservaTemporal=invocation.getArgument(0);
-            reservaTemporal.setIdReserva(3L);
-            return reservaTemporal;
-        });
-        when(habitacionesServicesFeign.buscarPorId(reserva.getIdHabitacion())).thenReturn(any());
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        mvc.perform(post("/api/v1/reservas/")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(reserva)))
-                .andExpect(status().isOk());
-
-
-
     }
 }

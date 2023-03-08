@@ -24,7 +24,7 @@ class FacturaServiceFeignTest {
     @Mock
     FacturasClienteRest facturasClienteRest;
 
-    @InjectMocks
+    @Mock
     ReservaServiceImpl reservaService;
     @InjectMocks
     FacturaServiceFeign facturaServiceFeign;
