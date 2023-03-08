@@ -38,7 +38,7 @@ class FacturaServiceFeignTest {
         SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         Date fechaInicio = formato.parse(fechaIni);
         Date fechaFin = formato.parse(fechaF);
-        Reserva reserva = new Reserva(1L, 1L, fechaInicio, fechaFin);
+        Reserva reserva = new Reserva(1L, 1L, fechaInicio, fechaFin);\
 
         when(reservaService.crearReserva(any(Reserva.class))).then(invocation ->
         {
@@ -49,7 +49,6 @@ class FacturaServiceFeignTest {
         Reserva reserva1 = reservaService.crearReserva(reserva);
         assertTrue(reserva1.getIdReserva() == 3L);
 
-
         // Crear un objeto simulado de factura
         Factura factura = new Factura(1L, 1L, new Date(), new BigDecimal(250));
 
@@ -58,6 +57,5 @@ class FacturaServiceFeignTest {
         // Llamar al método crearFactura() y verificar si devuelve la factura correcta
         Factura facturaCreada = facturaServiceFeign.crearFactura(reserva);
         assertEquals(factura, facturaCreada);
-
     }
 }
